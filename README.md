@@ -2,6 +2,8 @@
 
 Impersonaid helps you evaluate your documentation against LLM-powered user personas to simulate real user interactions and gather feedback, as if it was a UX research session. Of course, it's not real substitute for proper user research, but it can be a useful tool for quick iterations and getting initial insights.
 
+Note that I created Impersonaid using Windsurf and Claude 3.7. This is an experimental tool.
+
 ## Overview
 
 Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
