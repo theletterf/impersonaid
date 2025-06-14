@@ -6,6 +6,8 @@ Impersonaid helps you evaluate your documentation against LLM-powered user perso
 
 Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
 
+<img width="1487" alt="Screenshot 2025-06-14 at 23 34 24" src="https://github.com/user-attachments/assets/6c168c99-45d5-491b-9e9b-205616b648fe" />
+
 ## Installation
 
 ```bash
