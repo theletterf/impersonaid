@@ -252,57 +252,7 @@ class DocumentFetcher {
     }
   }
 
-  /**
-   * Split content into chunks for processing by LLMs
-   * @param {string} content - Content to split
-   * @param {number} chunkSize - Maximum chunk size in characters
-   * @returns {Array<string>} - Array of content chunks
-   */
-  splitIntoChunks(content, chunkSize = 4000) {
-    const chunks = [];
-    let currentChunk = '';
-    
-    // Split content by paragraphs
-    const paragraphs = content.split('\n');
-    
-    for (const paragraph of paragraphs) {
-      // If adding this paragraph would exceed the chunk size, start a new chunk
-      if (currentChunk.length + paragraph.length > chunkSize && currentChunk.length > 0) {
-        chunks.push(currentChunk);
-        currentChunk = '';
-      }
-      
-      // If a single paragraph is larger than the chunk size, split it
-      if (paragraph.length > chunkSize) {
-        const words = paragraph.split(' ');
-        let tempChunk = '';
-        
-        for (const word of words) {
-          if (tempChunk.length + word.length > chunkSize && tempChunk.length > 0) {
-            if (currentChunk.length > 0) {
-              chunks.push(currentChunk);
-              currentChunk = '';
-            }
-            chunks.push(tempChunk);
-            tempChunk = '';
-          }
-          tempChunk += (tempChunk.length > 0 ? ' ' : '') + word;
-        }
-        
-        if (tempChunk.length > 0) {
-          currentChunk += (currentChunk.length > 0 ? '\n' : '') + tempChunk;
-        }
-      } else {
-        currentChunk += (currentChunk.length > 0 ? '\n' : '') + paragraph;
-      }
-    }
-    
-    if (currentChunk.length > 0) {
-      chunks.push(currentChunk);
-    }
-    
-    return chunks;
-  }
+  // Chunking logic has been removed in favor of content compression and extraction
 }
 
 module.exports = DocumentFetcher;

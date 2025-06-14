@@ -1,11 +1,10 @@
-# llm-docs-persona-simulator
-# LLM Docs Persona Simulator
+# Impersonaid
 
 Test your documentation against LLM-powered user personas to simulate real user interactions and gather feedback as if it was a UX research session.
 
 ## Overview
 
-The LLM Docs Persona Simulator is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
+The Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
 
 ### Key features
 
@@ -66,7 +65,7 @@ export GOOGLE_API_KEY="your-google-api-key"
 Create a sample persona to get started:
 
 ```bash
-llm-docs-persona-simulator create-sample --name expert_developer
+impersonaid create-sample --name expert_developer
 ```
 
 This will create a YAML file in the `personas` directory that you can customize.
@@ -74,7 +73,7 @@ This will create a YAML file in the `personas` directory that you can customize.
 ### Listing available personas
 
 ```bash
-llm-docs-persona-simulator list-personas
+impersonaid list-personas
 ```
 
 ### Running a simulation
@@ -82,7 +81,7 @@ llm-docs-persona-simulator list-personas
 Test documentation against a persona:
 
 ```bash
-llm-docs-persona-simulator simulate \
+impersonaid simulate \
   --persona beginner_developer \
   --doc "https://example.com/docs/getting-started" \
   --request "What are the first steps to install this product?" \
@@ -94,7 +93,7 @@ llm-docs-persona-simulator simulate \
 Run an interactive session with a persona:
 
 ```bash
-llm-docs-persona-simulator simulate \
+impersonaid simulate \
   --persona beginner_developer \
   --doc "https://example.com/docs/getting-started" \
   --request "Help me understand this documentation" \
@@ -105,7 +104,7 @@ llm-docs-persona-simulator simulate \
 ### Listing available models
 
 ```bash
-llm-docs-persona-simulator list-models
+impersonaid list-models
 ```
 
 ### Model-specific limitations
@@ -116,9 +115,9 @@ Different LLM providers have varying capabilities when it comes to processing do
 
 - **Gemini**: Supports direct URL analysis through its function calling capabilities. Gemini can browse and analyze web content directly.
 
-- **OpenAI**: Does not support direct web browsing. For OpenAI models, the simulator automatically fetches the document content, compresses it, and includes it in the prompt. This approach avoids chunking but may be limited by token constraints for very large documents.
+- **OpenAI**: Does not support direct web browsing. For OpenAI models, the simulator automatically fetches the document content, extracts important sections, compresses it, and includes it in the prompt.
 
-- **Ollama**: Does not support direct web browsing. For local models through Ollama, the simulator fetches the document content and processes it in chunks if necessary.
+- **Ollama**: Does not support direct web browsing. For local models through Ollama, the simulator fetches the document content, extracts important sections, and compresses it for efficient processing.
 
 ## Persona definition
 

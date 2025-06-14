@@ -1,10 +1,10 @@
 {
-  "name": "llm-docs-persona-simulator",
+  "name": "impersonaid",
   "version": "1.0.0",
   "description": "Test your documentation against LLM-powered user personas",
   "main": "index.js",
   "bin": {
-    "llm-docs-persona-simulator": "./index.js"
+    "impersonaid": "./index.js"
   },
   "scripts": {
     "start": "node index.js",

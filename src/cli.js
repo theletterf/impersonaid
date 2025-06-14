@@ -52,7 +52,7 @@ class CLI {
    */
   setupCommands() {
     this.program
-      .name('llm-docs-persona-simulator')
+      .name('impersonaid')
       .description('Simulate user personas interacting with documentation using LLMs')
       .version('1.0.0');
 
