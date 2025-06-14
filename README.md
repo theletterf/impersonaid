@@ -4,16 +4,16 @@ Test your documentation against LLM-powered user personas to simulate real user 
 
 ## Overview
 
-The Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
+Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
 
 ### Key features
 
-- Define custom user personas with detailed attributes
-- Test documentation against these personas using powerful LLMs
-- Support for multiple LLM providers (OpenAI, Anthropic Claude, Google Gemini)
-- Local model support via Ollama
-- Interactive or file-based output modes
-- Simple command-line interface
+- Define custom user personas with detailed attributes.
+- Test documentation against these personas using powerful LLMs. 
+- Support for multiple LLM providers (OpenAI, Anthropic Claude, Google Gemini).
+- Local model support via Ollama.
+- Interactive or file-based output modes.
+- Simple command-line interface.
 
 ## Installation
 
@@ -41,8 +41,6 @@ cp config.toml.example config.toml
 
 ```toml
 [api_keys]
-# API keys for different LLM providers
-# These will be loaded from environment variables if not specified here
 openai = "your-openai-api-key" # OpenAI API key
 anthropic = "your-anthropic-api-key" # Anthropic API key for Claude
 google = "your-google-api-key" # Google API key for Gemini
@@ -59,6 +57,8 @@ export GOOGLE_API_KEY="your-google-api-key"
 ```
 
 ## Usage
+
+Impersonaid can be used either through the command line interface or the web interface.
 
 ### Creating personas
 
@@ -106,6 +106,24 @@ impersonaid simulate \
 ```bash
 impersonaid list-models
 ```
+
+### Web interface
+
+Impersonaid also provides a web interface for a more interactive experience:
+
+```bash
+impersonaid web
+# or
+npm run web
+```
+
+This starts a local web server at http://localhost:3000 where you can:
+
+- Input documentation via URL or paste markdown content directly
+- Select from available personas
+- Choose your preferred LLM provider
+- Chat with the simulated persona in a user-friendly interface
+- See responses in a chat-like conversation view
 
 ### Model-specific limitations
 

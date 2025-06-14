@@ -86,6 +86,13 @@ class CLI {
       .command('list-models')
       .description('List available LLM models')
       .action(() => this.listModels());
+      
+    // Web interface command
+    this.program
+      .command('web')
+      .description('Start the web interface')
+      .option('-p, --port <port>', 'Port to run the web server on', '3000')
+      .action((options) => this.startWebInterface(options));
   }
 
   /**
@@ -237,6 +244,12 @@ class CLI {
    * @returns {Promise<string>} - The simulated response
    */
   async simulateResponse(llm, persona, document, request, useDirectBrowsing = false) {
+    // Always use content-based approach for markdown content
+    const isMarkdownContent = document.url === 'markdown://local';
+    if (isMarkdownContent) {
+      useDirectBrowsing = false;
+    }
+    
     if (useDirectBrowsing) {
       // Check if this is OpenAI which needs document content despite having browsing capability set
       if (llm instanceof require('./models/openai')) {
@@ -315,6 +328,174 @@ class CLI {
     return await llm.generate(userPrompt, { systemPrompt });
   }
 
+  /**
+   * Start the web interface
+   * @param {object} options - Web interface options
+   */
+  startWebInterface(options) {
+    const port = options.port || process.env.PORT || 3000;
+    
+    try {
+      // Dynamically require the web server to avoid loading it when not needed
+      const path = require('path');
+      const express = require('express');
+      const http = require('http');
+      const socketIo = require('socket.io');
+      const cors = require('cors');
+      
+      // Create Express app
+      const app = express();
+      const server = http.createServer(app);
+      const io = socketIo(server);
+      
+      // Middleware
+      app.use(cors());
+      app.use(express.json({ limit: '10mb' }));
+      app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+      app.use(express.static(path.join(__dirname, 'web/public')));
+      app.set('view engine', 'ejs');
+      app.set('views', path.join(__dirname, 'web/views'));
+      
+      // Routes
+      app.get('/', (req, res) => {
+        res.render('index', {
+          title: 'Impersonaid - Documentation Persona Simulator'
+        });
+      });
+      
+      // API endpoints
+      app.get('/api/personas', (req, res) => {
+        const personas = this.personaManager.getPersonaNames();
+        res.json({ personas });
+      });
+      
+      app.get('/api/models', (req, res) => {
+        const providers = this.llmFactory.getSupportedProviders();
+        const models = {};
+        
+        providers.forEach(provider => {
+          models[provider] = config.getDefaultModel(provider);
+        });
+        
+        res.json({ providers, models });
+      });
+      
+      // Handle WebSocket connections
+      io.on('connection', (socket) => {
+        console.log('Client connected');
+        
+        // Helper function to log status to CLI only
+        const logStatus = (message) => {
+          console.log(`[Status] ${message}`);
+        };
+        
+        // Helper function to log status to both CLI and client
+        const logUIStatus = (message) => {
+          console.log(`[Status] ${message}`);
+          socket.emit('status', { message });
+        };
+        
+        // Handle combined document submission and simulation request
+        socket.on('simulate-with-document', async (data) => {
+          try {
+            // Process document
+            let document;
+            
+            if (data.documentType === 'url') {
+              // Fetch document from URL
+              logStatus(`Fetching document from ${data.documentUrl}...`);
+              document = await this.documentFetcher.fetchFromUrl(data.documentUrl);
+              logStatus(`Fetched document: ${document.title}`);
+            } else {
+              // Use provided markdown content
+              logStatus('Processing provided markdown content...');
+              document = {
+                url: 'markdown://local',
+                title: 'Provided Markdown Document',
+                content: data.markdownContent
+              };
+            }
+            
+            // Get persona
+            logStatus(`Using persona: ${data.persona}`);
+            const persona = this.personaManager.getPersona(data.persona);
+            if (!persona) {
+              const errorMsg = `Persona "${data.persona}" not found.`;
+              console.error(`[Error] ${errorMsg}`);
+              socket.emit('error', { message: errorMsg });
+              return;
+            }
+            
+            // Get LLM
+            logStatus(`Initializing ${data.model} model...`);
+            const llm = this.llmFactory.getLLM(data.model);
+            const initialized = await llm.initialize();
+            
+            if (!initialized) {
+              const errorMsg = `Failed to initialize ${data.model} LLM.`;
+              console.error(`[Error] ${errorMsg}`);
+              socket.emit('error', { message: errorMsg });
+              return;
+            }
+            
+            logStatus(`Using ${data.model} model: ${llm.getModelName()}`);
+            
+            // For markdown content, always use the direct content approach, not browsing
+            const isMarkdownContent = document.url === 'markdown://local';
+            const useDirectBrowsing = !isMarkdownContent && llm.supportsBrowsing();
+            
+            if (useDirectBrowsing) {
+              logStatus(`Using direct browsing capability for ${data.model}`);
+            } else {
+              // Show processing status in UI
+              logUIStatus('Processing document content...');
+            }
+            
+            // Show generation status in UI
+            logUIStatus('Generating response...');
+            
+            const response = await this.simulateResponse(llm, persona, document, data.request, useDirectBrowsing);
+            
+            // Send response to client
+            logStatus('Response generated successfully');
+            socket.emit('response', { 
+              persona: data.persona,
+              request: data.request,
+              response
+            });
+            
+            console.log('-----------------------------------');
+            console.log(`Request: ${data.request}`);
+            console.log(`Persona: ${data.persona}`);
+            console.log(`Model: ${data.model}`);
+            console.log('Response generated successfully');
+            console.log('-----------------------------------');
+            
+          } catch (error) {
+            const errorMsg = `Error generating response: ${error.message}`;
+            console.error(`[Error] ${errorMsg}`);
+            socket.emit('error', { message: errorMsg });
+          }
+        });
+        
+        socket.on('disconnect', () => {
+          console.log('Client disconnected');
+        });
+      });
+      
+      // Start server
+      server.listen(port, () => {
+        console.log(`Impersonaid web interface running at http://localhost:${port}`);
+        console.log('Press Ctrl+C to stop');
+      });
+      
+    } catch (error) {
+      console.error('Error starting web interface:', error.message);
+      console.error('Make sure you have installed the required dependencies:');
+      console.error('npm install express socket.io cors ejs');
+    }
+  }
+  
   /**
    * Parse command line arguments and run the CLI
    * @param {Array<string>} argv - Command line arguments

@@ -1,4 +1,4 @@
-name: non_technical_user
+name: Non-technical user
 description: A business user with limited technical knowledge who needs to understand and use a technical product.
 expertise:
   technical: Novice

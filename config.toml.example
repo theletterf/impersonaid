@@ -1,8 +1,6 @@
 # Impersonaid Configuration
 
 [api_keys]
-# API keys for different LLM providers
-# These will be loaded from environment variables if not specified here
 openai = "" # OpenAI API key
 anthropic = "" # Anthropic API key for Claude
 google = "" # Google API key for Gemini
