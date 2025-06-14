@@ -1,0 +1,28 @@
+# LLM Docs Persona Simulator Configuration
+
+[api_keys]
+# API keys for different LLM providers
+# These will be loaded from environment variables if not specified here
+openai = "" # OpenAI API key
+anthropic = "" # Anthropic API key for Claude
+google = "" # Google API key for Gemini
+
+[models]
+# Default models to use for each provider
+openai_default = "gpt-4o"
+anthropic_default = "claude-sonnet-4-20250514"
+gemini_default = "gemini-2.0-flash"
+ollama_default = "llama3"
+
+[ollama]
+# Configuration for local Ollama models
+host = "http://localhost:11434"
+
+[output]
+# Output configuration
+default_format = "text" # Options: text, interactive
+output_dir = "./output"
+
+[personas]
+# Directory containing persona definitions
+personas_dir = "./personas"

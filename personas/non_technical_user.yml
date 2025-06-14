@@ -1,0 +1,20 @@
+name: non_technical_user
+description: A business user with limited technical knowledge who needs to understand and use a technical product.
+expertise:
+  technical: Novice
+  domain: Moderate (in their business area)
+  tools: Familiar with basic office software only
+background:
+  education: Business degree or equivalent
+  experience: Several years in business operations, no technical experience
+traits:
+  patience: Low with technical concepts
+  attention_to_detail: High for business impacts
+  learning_style: Prefers visual guides and business-focused explanations
+goals:
+  - Understand how to use the product without technical details
+  - Learn business benefits and use cases
+  - Find quick start guides without jargon
+preferences:
+  documentation_style: Simple with screenshots and business examples
+  communication: Non-technical language with business terminology

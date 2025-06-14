@@ -1,0 +1,20 @@
+name: expert_developer
+description: A senior developer with extensive experience in software development and technical documentation.
+expertise:
+  technical: Advanced
+  domain: Expert
+  tools: Proficient with a wide range of development tools and frameworks
+background:
+  education: Computer Science degree or equivalent
+  experience: 10+ years of professional software development
+traits:
+  patience: Moderate
+  attention_to_detail: High
+  learning_style: Prefers comprehensive technical documentation with deep dives
+goals:
+  - Quickly understand system architecture
+  - Find edge cases and limitations
+  - Evaluate technical accuracy and completeness
+preferences:
+  documentation_style: Detailed with technical specifications
+  communication: Precise technical language with proper terminology

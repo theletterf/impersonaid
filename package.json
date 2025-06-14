@@ -1,0 +1,52 @@
+{
+  "name": "llm-docs-persona-simulator",
+  "version": "1.0.0",
+  "description": "Test your documentation against LLM-powered user personas",
+  "main": "index.js",
+  "bin": {
+    "llm-docs-persona-simulator": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "create-sample": "node index.js create-sample",
+    "list-personas": "node index.js list-personas",
+    "list-models": "node index.js list-models"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theletterf/llm-docs-persona-simulator.git"
+  },
+  "keywords": [
+    "llm",
+    "documentation",
+    "persona",
+    "simulator",
+    "user-testing",
+    "ux-research",
+    "openai",
+    "claude",
+    "gemini",
+    "ollama"
+  ],
+  "author": "Fabrizio Ferri-Benedetti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theletterf/llm-docs-persona-simulator/issues"
+  },
+  "homepage": "https://github.com/theletterf/llm-docs-persona-simulator#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.54.0",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.10.0",
+    "cheerio": "^1.1.0",
+    "commander": "^14.0.0",
+    "dotenv": "^16.5.0",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^5.3.0",
+    "toml": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
