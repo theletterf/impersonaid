@@ -14,7 +14,7 @@ Impersonaid is a tool that helps documentation writers, UX researchers, and prod
 
 ```bash
 # Clone the repository
-git clone https://github.com/theletterf/llm-docs-persona-simulator.git
+git clone https://github.com/theletterf/impersonaid.git
 cd llm-docs-persona-simulator
 
 # Install dependencies
