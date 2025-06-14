@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <div class="sidebar-header">
+          <h1>Impersonaid</h1>
+          <p class="text-muted">Persona Management</p>
+        </div>
+        
+        <div class="sidebar-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Personas</h5>
+            <button class="btn btn-sm btn-primary" id="createPersonaBtn">
+              <i class="bi bi-plus"></i> New
+            </button>
+          </div>
+          <div class="list-group persona-list" id="personaList">
+            <!-- Personas will be loaded here -->
+          </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <a href="/" class="btn btn-outline-secondary w-100">
+            <i class="bi bi-chat"></i> Back to Chat
+          </a>
+        </div>
+      </div>
+      
+      <!-- Main Content Area -->
+      <div class="col-md-9 content-area">
+        <div class="persona-editor" id="personaEditor">
+          <div class="alert alert-info" id="editorPlaceholder">
+            <i class="bi bi-info-circle"></i> Select a persona from the list or create a new one.
+          </div>
+          
+          <div class="card d-none" id="editorCard">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Edit Persona</h5>
+              <div>
+                <button class="btn btn-sm btn-success me-2" id="savePersonaBtn">
+                  <i class="bi bi-save"></i> Save
+                </button>
+                <button class="btn btn-sm btn-danger" id="deletePersonaBtn">
+                  <i class="bi bi-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="personaForm">
+                <!-- Basic Information -->
+                <div class="mb-3">
+                  <label for="personaName" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="personaName" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="personaDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="personaDescription" rows="2" required></textarea>
+                </div>
+                
+                <!-- Expertise -->
+                <h6 class="mt-4 mb-3">Expertise</h6>
+                
+                <div class="mb-3">
+                  <label for="technicalExpertise" class="form-label">Technical Expertise</label>
+                  <select class="form-select" id="technicalExpertise" required>
+                    <option value="Novice">Novice</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Expert">Expert</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="domainExpertise" class="form-label">Domain Expertise</label>
+                  <select class="form-select" id="domainExpertise" required>
+                    <option value="Limited">Limited</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Extensive">Extensive</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="toolsExpertise" class="form-label">Tools Expertise</label>
+                  <input type="text" class="form-control" id="toolsExpertise" required>
+                </div>
+                
+                <!-- Background -->
+                <h6 class="mt-4 mb-3">Background</h6>
+                
+                <div class="mb-3">
+                  <label for="education" class="form-label">Education</label>
+                  <input type="text" class="form-control" id="education" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="experience" class="form-label">Experience</label>
+                  <input type="text" class="form-control" id="experience" required>
+                </div>
+                
+                <!-- Traits -->
+                <h6 class="mt-4 mb-3">Traits</h6>
+                
+                <div class="mb-3">
+                  <label for="patience" class="form-label">Patience</label>
+                  <select class="form-select" id="patience" required>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="attentionToDetail" class="form-label">Attention to Detail</label>
+                  <select class="form-select" id="attentionToDetail" required>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Very high">Very high</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="learningStyle" class="form-label">Learning Style</label>
+                  <input type="text" class="form-control" id="learningStyle" required>
+                </div>
+                
+                <!-- Goals -->
+                <h6 class="mt-4 mb-3">Goals</h6>
+                
+                <div id="goalsContainer">
+                  <!-- Goals will be added here -->
+                  <div class="input-group mb-2 goal-input">
+                    <input type="text" class="form-control" placeholder="Enter a goal">
+                    <button class="btn btn-outline-secondary remove-goal" type="button">
+                      <i class="bi bi-x"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <button type="button" class="btn btn-sm btn-outline-primary mb-3" id="addGoalBtn">
+                  <i class="bi bi-plus"></i> Add Goal
+                </button>
+                
+                <!-- Preferences -->
+                <h6 class="mt-4 mb-3">Preferences</h6>
+                
+                <div class="mb-3">
+                  <label for="documentationStyle" class="form-label">Documentation Style</label>
+                  <input type="text" class="form-control" id="documentationStyle" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="communication" class="form-label">Communication</label>
+                  <input type="text" class="form-control" id="communication" required>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+          <!-- YAML Preview -->
+          <div class="card mt-4 d-none" id="yamlPreviewCard">
+            <div class="card-header">
+              <h5 class="mb-0">YAML Preview</h5>
+            </div>
+            <div class="card-body">
+              <pre class="yaml-preview" id="yamlPreview"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="/js/personas.js"></script>
+</body>
+</html>

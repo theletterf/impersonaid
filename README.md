@@ -1,19 +1,10 @@
 # Impersonaid
 
-Test your documentation against LLM-powered user personas to simulate real user interactions and gather feedback as if it was a UX research session.
+Impersonaid helps you evaluate your documentation against LLM-powered user personas to simulate real user interactions and gather feedback, as if it was a UX research session. Of course, it's not real substitute for proper user research, but it can be a useful tool for quick iterations and getting initial insights.
 
 ## Overview
 
 Impersonaid is a tool that helps documentation writers, UX researchers, and product teams evaluate documentation from different user perspectives. By defining user personas with varying levels of expertise, backgrounds, and preferences, you can simulate how different users would interact with your documentation.
-
-### Key features
-
-- Define custom user personas with detailed attributes.
-- Test documentation against these personas using powerful LLMs. 
-- Support for multiple LLM providers (OpenAI, Anthropic Claude, Google Gemini).
-- Local model support via Ollama.
-- Interactive or file-based output modes.
-- Simple command-line interface.
 
 ## Installation
 

@@ -363,10 +363,103 @@ class CLI {
         });
       });
       
+      // Persona management UI
+      app.get('/personas', (req, res) => {
+        res.render('personas', {
+          title: 'Impersonaid - Persona Management'
+        });
+      });
+      
       // API endpoints
       app.get('/api/personas', (req, res) => {
         const personas = this.personaManager.getPersonaNames();
         res.json({ personas });
+      });
+      
+      // Get all personas with details
+      app.get('/api/personas/all', (req, res) => {
+        try {
+          const personaMap = this.personaManager.loadAllPersonas();
+          const personas = Array.from(personaMap.values());
+          res.json({ success: true, personas });
+        } catch (error) {
+          res.status(500).json({ success: false, message: error.message });
+        }
+      });
+      
+      // Get a specific persona
+      app.get('/api/personas/:name', (req, res) => {
+        try {
+          const personaName = req.params.name;
+          const persona = this.personaManager.getPersona(personaName);
+          
+          if (!persona) {
+            return res.status(404).json({ success: false, message: `Persona "${personaName}" not found.` });
+          }
+          
+          res.json({ success: true, persona });
+        } catch (error) {
+          res.status(500).json({ success: false, message: error.message });
+        }
+      });
+      
+      // Save a persona
+      app.post('/api/personas/save', express.json(), (req, res) => {
+        try {
+          const { persona } = req.body;
+          
+          if (!persona || !persona.name) {
+            return res.status(400).json({ success: false, message: 'Invalid persona data' });
+          }
+          
+          // Convert persona object to YAML and save it
+          const yaml = require('js-yaml');
+          const fs = require('fs');
+          const path = require('path');
+          
+          const yamlContent = yaml.dump(persona);
+          const fileName = persona.name.toLowerCase().replace(/\s+/g, '_') + '.yml';
+          const filePath = path.join(this.personaManager.personasDir, fileName);
+          
+          fs.writeFileSync(filePath, yamlContent, 'utf8');
+          
+          // Reload personas
+          this.personaManager.loadAllPersonas();
+          
+          res.json({ success: true, message: 'Persona saved successfully' });
+        } catch (error) {
+          res.status(500).json({ success: false, message: error.message });
+        }
+      });
+      
+      // Delete a persona
+      app.delete('/api/personas/:name', (req, res) => {
+        try {
+          const personaName = req.params.name;
+          const persona = this.personaManager.getPersona(personaName);
+          
+          if (!persona) {
+            return res.status(404).json({ success: false, message: `Persona "${personaName}" not found.` });
+          }
+          
+          // Delete the persona file
+          const fs = require('fs');
+          const path = require('path');
+          
+          const fileName = personaName.toLowerCase().replace(/\s+/g, '_') + '.yml';
+          const filePath = path.join(this.personaManager.personasDir, fileName);
+          
+          if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+          }
+          
+          // Reload personas
+          this.personaManager.loadAllPersonas();
+          
+          res.json({ success: true, message: 'Persona deleted successfully' });
+        } catch (error) {
+          res.status(500).json({ success: false, message: error.message });
+        }
       });
       
       app.get('/api/models', (req, res) => {

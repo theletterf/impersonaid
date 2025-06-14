@@ -157,6 +157,38 @@ body {
   padding-left: 20px;
 }
 
+/* Persona Management Styles */
+.content-area {
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.persona-editor {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.yaml-preview {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.9rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.goal-input {
+  transition: all 0.3s ease;
+}
+
+.goal-input:hover {
+  transform: translateX(5px);
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .sidebar {
@@ -170,5 +202,9 @@ body {
   
   .message {
     max-width: 90%;
+  }
+  
+  .content-area {
+    height: 60vh;
   }
 }
