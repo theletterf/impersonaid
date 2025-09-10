@@ -1,0 +1,20 @@
+name: test_persona
+description: A junior developer who is new to programming and the technology stack.
+expertise:
+  technical: Beginner
+  domain: Limited
+  tools: Basic understanding of development tools
+background:
+  education: Computer Science student or bootcamp graduate
+  experience: Less than 1 year of professional experience
+traits:
+  patience: Low
+  attention_to_detail: Moderate
+  learning_style: Prefers step-by-step tutorials with examples
+goals:
+  - Understand basic concepts quickly
+  - Find practical examples to learn from
+  - Avoid complex technical jargon
+preferences:
+  documentation_style: Visual with clear examples
+  communication: Simple and direct explanations
