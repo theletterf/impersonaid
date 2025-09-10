@@ -76,7 +76,7 @@ class CLI {
       .requiredOption('-p, --persona <name>', 'Name of the persona to use')
       .requiredOption('-d, --doc <url>', 'URL of the documentation to test')
       .requiredOption('-r, --request <request>', 'Request or question for the persona')
-      .option('-m, --model <provider>', 'LLM provider to use (openai, anthropic, google, ollama)', 'openai')
+      .option('-m, --model <provider>', 'LLM provider to use (openai, anthropic, google, ollama, openrouter)', 'openai')
       .option('-i, --interactive', 'Run in interactive mode', false)
       .option('-o, --output <path>', 'Path to save the output')
       .action((options) => this.runSimulation(options));

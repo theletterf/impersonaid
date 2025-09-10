@@ -4,6 +4,7 @@
 openai = "" # OpenAI API key
 anthropic = "" # Anthropic API key for Claude
 google = "" # Google API key for Gemini
+openrouter = "" # OpenRouter API key
 
 [models]
 # Default models to use for each provider
@@ -11,6 +12,7 @@ openai_default = "gpt-4o"
 anthropic_default = "claude-sonnet-4-20250514"
 gemini_default = "gemini-2.0-flash"
 ollama_default = "llama3"
+openrouter_default = "openai/gpt-4o"
 
 [ollama]
 # Configuration for local Ollama models

@@ -27,7 +27,8 @@
     "openai",
     "claude",
     "gemini",
-    "ollama"
+    "ollama",
+    "openrouter"
   ],
   "author": "Fabrizio Ferri-Benedetti",
   "license": "MIT",
