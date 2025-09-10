@@ -31,7 +31,7 @@ class Config {
 
   /**
    * Get API key for a specific provider
-   * @param {string} provider - The LLM provider (openai, anthropic, google)
+   * @param {string} provider - The LLM provider (openai, anthropic, google, openrouter)
    * @returns {string} - The API key
    */
   getApiKey(provider) {
@@ -39,7 +39,8 @@ class Config {
     const envVarMap = {
       openai: 'OPENAI_API_KEY',
       anthropic: 'ANTHROPIC_API_KEY',
-      google: 'GOOGLE_API_KEY'
+      google: 'GOOGLE_API_KEY',
+      openrouter: 'OPENROUTER_API_KEY'
     };
     
     if (envVarMap[provider] && process.env[envVarMap[provider]]) {
@@ -56,7 +57,7 @@ class Config {
 
   /**
    * Get default model for a specific provider
-   * @param {string} provider - The LLM provider (openai, anthropic, google, ollama)
+   * @param {string} provider - The LLM provider (openai, anthropic, google, ollama, openrouter)
    * @returns {string} - The default model name
    */
   getDefaultModel(provider) {
@@ -64,7 +65,8 @@ class Config {
       openai: 'openai_default',
       anthropic: 'anthropic_default',
       google: 'gemini_default',
-      ollama: 'ollama_default'
+      ollama: 'ollama_default',
+      openrouter: 'openrouter_default'
     };
     
     const key = modelKeyMap[provider];
@@ -77,7 +79,8 @@ class Config {
       openai: 'gpt-4o',
       anthropic: 'claude-3-opus-20240229',
       google: 'gemini-1.5-pro',
-      ollama: 'llama3'
+      ollama: 'llama3',
+      openrouter: 'openai/gpt-4o'
     };
     
     return defaults[provider];

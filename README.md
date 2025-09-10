@@ -39,6 +39,7 @@ cp config.toml.example config.toml
 openai = "your-openai-api-key" # OpenAI API key
 anthropic = "your-anthropic-api-key" # Anthropic API key for Claude
 google = "your-google-api-key" # Google API key for Gemini
+openrouter = "your-openrouter-api-key" # OpenRouter API key
 
 # Additional configuration options...
 ```
@@ -49,7 +50,19 @@ Alternatively, you can set the API keys as environment variables:
 export OPENAI_API_KEY="your-openai-api-key"
 export ANTHROPIC_API_KEY="your-anthropic-api-key"
 export GOOGLE_API_KEY="your-google-api-key"
+export OPENROUTER_API_KEY="your-openrouter-api-key"
 ```
+
+### OpenRouter Setup
+
+OpenRouter provides access to multiple LLM providers through a single API. To use OpenRouter:
+
+1. Sign up at [openrouter.ai](https://openrouter.ai)
+2. Get your API key from the dashboard
+3. Set it in your config.toml or as an environment variable
+4. Use any of the supported model names like `openai/gpt-4o`, `anthropic/claude-3-opus`, `google/gemini-pro`, etc.
+
+OpenRouter allows you to access models from different providers using a single API key, which can be more convenient than managing multiple API keys.
 
 ## Usage
 
@@ -80,7 +93,7 @@ impersonaid simulate \
   --persona beginner_developer \
   --doc "https://example.com/docs/getting-started" \
   --request "What are the first steps to install this product?" \
-  --model openai
+  --model openrouter
 ```
 
 ### Interactive mode
@@ -127,6 +140,8 @@ Different LLM providers have varying capabilities when it comes to processing do
 - **Claude**: Supports direct URL analysis through prompt engineering. Claude can analyze the content of URLs provided in the prompt.
 
 - **Gemini**: Supports direct URL analysis through its function calling capabilities. Gemini can browse and analyze web content directly.
+
+- **OpenRouter**: Does not support direct web browsing. For OpenRouter models, the simulator fetches the document content, extracts important sections, compresses it, and includes it in the prompt similar to OpenAI.
 
 - **OpenAI**: Does not support direct web browsing. For OpenAI models, the simulator automatically fetches the document content, extracts important sections, compresses it, and includes it in the prompt.
 
